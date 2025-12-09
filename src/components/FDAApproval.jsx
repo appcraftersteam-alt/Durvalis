@@ -46,13 +46,13 @@ function FDAApproval() {
                     </div>
 
                     <a
-                        href="https://open.fda.gov/fdalabels/ndc_number/"
+                        href="https://www.accessdata.fda.gov/spl/data/e3af6af9-3379-433a-975b-4c9d3357cb1a/e3af6af9-3379-433a-975b-4c9d3357cb1a.xml"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-blue-600/30 hover:bg-blue-700 hover:shadow-blue-700/40 transition-all group transform hover:-translate-y-0.5"
                     >
                         <FileText size={20} />
-                        Verify Approval Document
+                        Verify National Drug Code
                         <ExternalLink size={16} className="opacity-70 group-hover:opacity-100 transition-opacity" />
                     </a>
                 </motion.div>

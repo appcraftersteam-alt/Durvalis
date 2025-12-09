@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { Send, User, Mail, MessageSquare, CheckCircle, Clock, ArrowRight, AlertCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
+// Initialize EmailJS
+emailjs.init('S4RiBj9HvdQhBnUVM');
+
 function ContactForm() {
     const [formData, setFormData] = useState({
         name: '',
@@ -29,19 +32,23 @@ function ContactForm() {
 
         try {
             // EmailJS configuration
-            const serviceId = 'YOUR_SERVICE_ID';
-            const templateId = 'YOUR_TEMPLATE_ID';
-            const publicKey = 'YOUR_PUBLIC_KEY';
+            const serviceId = 'service_kt2qcvw';
+            const templateId = 'template_00qdw28';
+            const publicKey = 'S4RiBj9HvdQhBnUVM';
 
             const templateParams = {
                 from_name: formData.name,
                 from_email: formData.email,
                 subject: formData.subject,
-                message: formData.message,
-                to_email: 'contact@durvalis.com'
+                message: formData.message
             };
 
-            await emailjs.send(serviceId, templateId, templateParams, publicKey);
+            console.log('Sending email with params:', templateParams);
+            console.log('Service ID:', serviceId);
+            console.log('Template ID:', templateId);
+
+            const result = await emailjs.send(serviceId, templateId, templateParams, publicKey);
+            console.log('EmailJS Success:', result);
 
             setIsSubmitting(false);
             setIsSuccess(true);
@@ -50,8 +57,22 @@ function ContactForm() {
             setTimeout(() => setIsSuccess(false), 5000);
         } catch (err) {
             setIsSubmitting(false);
-            setError('Failed to send message. Please try again or email us directly at contact@durvalis.com');
-            console.error('EmailJS Error:', err);
+            console.error('EmailJS Error Details:', err);
+            console.error('Error status:', err.status);
+            console.error('Error text:', err.text);
+            
+            let errorMessage = 'Failed to send message. ';
+            if (err.status === 400) {
+                errorMessage += 'Invalid template or service configuration.';
+            } else if (err.status === 401) {
+                errorMessage += 'Authentication failed. Check your public key.';
+            } else if (err.status === 404) {
+                errorMessage += 'Template or service not found.';
+            } else {
+                errorMessage += 'Please try again or email us directly at contact@durvalis.com';
+            }
+            
+            setError(errorMessage);
         }
     };
 
